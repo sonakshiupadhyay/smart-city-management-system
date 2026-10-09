@@ -1,0 +1,182 @@
+package com.smartcity.dao;
+
+import com.smartcity.exception.DatabaseException;
+import com.smartcity.model.IoTSensor;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * IoTSensorDAO - Data Access Object for IoT sensor hardware and monitoring feeds.
+ * 
+ * @author Smart City Management System
+ */
+public class IoTSensorDAO extends AbstractDAO<IoTSensor> {
+
+    private static final String INSERT = 
+        "INSERT INTO iot_sensors (sensor_name, sensor_type, location, latitude, longitude, status, last_reading, last_reading_time) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    private static final String UPDATE = 
+        "UPDATE iot_sensors SET sensor_name = ?, sensor_type = ?, location = ?, latitude = ?, longitude = ?, " +
+        "status = ?, last_reading = ?, last_reading_time = ? WHERE sensor_id = ?";
+    private static final String UPDATE_READING = 
+        "UPDATE iot_sensors SET last_reading = ?, last_reading_time = NOW() WHERE sensor_id = ?";
+    private static final String DELETE = "DELETE FROM iot_sensors WHERE sensor_id = ?";
+    private static final String FIND_BY_ID = "SELECT * FROM iot_sensors WHERE sensor_id = ?";
+    private static final String FIND_ALL = "SELECT * FROM iot_sensors ORDER BY sensor_name ASC";
+    private static final String FIND_BY_TYPE = "SELECT * FROM iot_sensors WHERE sensor_type = ? ORDER BY sensor_name ASC";
+    private static final String FIND_ACTIVE = "SELECT * FROM iot_sensors WHERE status = 'ACTIVE'";
+    private static final String COUNT = "SELECT COUNT(*) FROM iot_sensors";
+    private static final String COUNT_BY_STATUS = "SELECT COUNT(*) FROM iot_sensors WHERE status = ?";
+
+    @Override
+    public int insert(IoTSensor sensor) throws DatabaseException {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, sensor.getSensorName());
+            stmt.setString(2, sensor.getSensorType());
+            stmt.setString(3, sensor.getLocation());
+            stmt.setDouble(4, sensor.getLatitude());
+            stmt.setDouble(5, sensor.getLongitude());
+            stmt.setString(6, sensor.getStatus());
+            stmt.setDouble(7, sensor.getLastReading());
+            stmt.setTimestamp(8, sensor.getLastReadingTime() != null ? sensor.getLastReadingTime() : new Timestamp(System.currentTimeMillis()));
+            
+            stmt.executeUpdate();
+            rs = stmt.getGeneratedKeys();
+            if (rs.next()) return rs.getInt(1);
+            throw new DatabaseException("Creating sensor failed, no ID obtained.");
+        } catch (SQLException e) {
+            throw new DatabaseException("Error inserting IoT sensor: " + e.getMessage(), e);
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+    }
+
+    @Override
+    public boolean update(IoTSensor sensor) throws DatabaseException {
+        return executeUpdate(UPDATE, sensor.getSensorName(), sensor.getSensorType(), sensor.getLocation(),
+            sensor.getLatitude(), sensor.getLongitude(), sensor.getStatus(), sensor.getLastReading(),
+            sensor.getLastReadingTime(), sensor.getSensorId()) > 0;
+    }
+
+    public boolean updateReading(int sensorId, double reading) throws DatabaseException {
+        return executeUpdate(UPDATE_READING, reading, sensorId) > 0;
+    }
+
+    @Override
+    public boolean delete(int id) throws DatabaseException {
+        return executeUpdate(DELETE, id) > 0;
+    }
+
+    @Override
+    public IoTSensor findById(int id) throws DatabaseException {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = getConnection().prepareStatement(FIND_BY_ID);
+            stmt.setInt(1, id);
+            rs = stmt.executeQuery();
+            if (rs.next()) return mapResultSet(rs);
+            return null;
+        } catch (SQLException e) {
+            throw new DatabaseException("Error finding sensor by ID: " + e.getMessage(), e);
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+    }
+
+    @Override
+    public List<IoTSensor> findAll() throws DatabaseException {
+        List<IoTSensor> list = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = getConnection().prepareStatement(FIND_ALL);
+            rs = stmt.executeQuery();
+            while (rs.next()) list.add(mapResultSet(rs));
+            return list;
+        } catch (SQLException e) {
+            throw new DatabaseException("Error fetching all sensors: " + e.getMessage(), e);
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+    }
+
+    public List<IoTSensor> findByType(String type) throws DatabaseException {
+        List<IoTSensor> list = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = getConnection().prepareStatement(FIND_BY_TYPE);
+            stmt.setString(1, type);
+            rs = stmt.executeQuery();
+            while (rs.next()) list.add(mapResultSet(rs));
+            return list;
+        } catch (SQLException e) {
+            throw new DatabaseException("Error fetching sensors by type: " + e.getMessage(), e);
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+    }
+
+    public List<IoTSensor> findActive() throws DatabaseException {
+        List<IoTSensor> list = new ArrayList<>();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = getConnection().prepareStatement(FIND_ACTIVE);
+            rs = stmt.executeQuery();
+            while (rs.next()) list.add(mapResultSet(rs));
+            return list;
+        } catch (SQLException e) {
+            throw new DatabaseException("Error fetching active sensors: " + e.getMessage(), e);
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+    }
+
+    @Override
+    public int count() throws DatabaseException {
+        return executeCount(COUNT);
+    }
+
+    public int countByStatus(String status) throws DatabaseException {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = getConnection().prepareStatement(COUNT_BY_STATUS);
+            stmt.setString(1, status);
+            rs = stmt.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+            return 0;
+        } catch (SQLException e) {
+            throw new DatabaseException("Error counting sensors by status: " + e.getMessage(), e);
+        } finally {
+            closeResultSet(rs);
+            closeStatement(stmt);
+        }
+    }
+
+    private IoTSensor mapResultSet(ResultSet rs) throws SQLException {
+        IoTSensor s = new IoTSensor();
+        s.setSensorId(rs.getInt("sensor_id"));
+        s.setSensorName(rs.getString("sensor_name"));
+        s.setSensorType(rs.getString("sensor_type"));
+        s.setLocation(rs.getString("location"));
+        s.setLatitude(rs.getDouble("latitude"));
+        s.setLongitude(rs.getDouble("longitude"));
+        s.setStatus(rs.getString("status"));
+        s.setLastReading(rs.getDouble("last_reading"));
+        s.setLastReadingTime(rs.getTimestamp("last_reading_time"));
+        s.setInstalledAt(rs.getTimestamp("installed_at"));
+        return s;
+    }
+}
