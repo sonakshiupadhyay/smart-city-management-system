@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
- * CityEventServlet - Controller for City Events, Weather Alerts, and Real-Time Bulletins.
+ * CityEventServlet - Controller for City Events, Weather Alerts, and Active Civic Bulletins.
  * 
  * @author Smart City Management System
  */

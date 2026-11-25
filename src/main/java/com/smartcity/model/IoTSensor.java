@@ -3,7 +3,7 @@ package com.smartcity.model;
 import java.sql.Timestamp;
 
 /**
- * IoTSensor - Represents an IoT sensor deployed in the smart city.
+ * IoTSensor - Represents a simulated sensor node deployed in the system.
  * Demonstrates OOP Interface implementation (Monitorable).
  * 
  * @author Smart City Management System

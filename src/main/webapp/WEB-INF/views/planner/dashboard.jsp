@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="pageTitle" value="Urban Planning Studio - SmartCity AI" />
+<c:set var="pageTitle" value="Urban Planning Studio - SmartCity" />
 <c:set var="activeMenu" value="dashboard" />
 <jsp:include page="../common/header.jsp" />
 

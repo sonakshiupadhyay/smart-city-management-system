@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * CityEventDAO - Data Access Object for city events and real-time alerts.
+ * CityEventDAO - Data Access Object for city events and active civic alerts.
  * 
  * @author Smart City Management System
  */
@@ -28,10 +28,12 @@ public class CityEventDAO extends AbstractDAO<CityEvent> {
 
     @Override
     public int insert(CityEvent event) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, event.getTitle());
             stmt.setString(2, event.getDescription());
             stmt.setString(3, event.getEventType());
@@ -57,6 +59,7 @@ public class CityEventDAO extends AbstractDAO<CityEvent> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -74,10 +77,12 @@ public class CityEventDAO extends AbstractDAO<CityEvent> {
 
     @Override
     public CityEvent findById(int id) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_ID);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             if (rs.next()) return mapResultSet(rs);
@@ -87,16 +92,19 @@ public class CityEventDAO extends AbstractDAO<CityEvent> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     @Override
     public List<CityEvent> findAll() throws DatabaseException {
         List<CityEvent> list = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ALL);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ALL);
             rs = stmt.executeQuery();
             while (rs.next()) list.add(mapResultSet(rs));
             return list;
@@ -105,15 +113,18 @@ public class CityEventDAO extends AbstractDAO<CityEvent> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     public List<CityEvent> findActiveEvents() throws DatabaseException {
         List<CityEvent> list = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ACTIVE);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ACTIVE);
             rs = stmt.executeQuery();
             while (rs.next()) list.add(mapResultSet(rs));
             return list;
@@ -122,6 +133,7 @@ public class CityEventDAO extends AbstractDAO<CityEvent> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 

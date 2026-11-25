@@ -5,7 +5,7 @@
     <div class="sidebar-logo">
         <div class="logo-badge">⚡</div>
         <div>
-            <div class="sidebar-brand-name">SmartCity AI</div>
+            <div class="sidebar-brand-name">SmartCity</div>
             <div class="sidebar-role-badge">${sessionScope.role != null ? sessionScope.role : 'GUEST'}</div>
         </div>
     </div>
@@ -31,7 +31,7 @@
                 </li>
                 <li class="nav-item ${activeMenu == 'safety' ? 'active' : ''}">
                     <a href="${pageContext.request.contextPath}/admin/safety">
-                        <span>🛡️</span> <span>Public Safety &amp; CCTV</span>
+                        <span>🛡️</span> <span>Public Safety</span>
                     </a>
                 </li>
                 <li class="nav-item ${activeMenu == 'services' ? 'active' : ''}">

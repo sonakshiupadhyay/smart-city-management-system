@@ -26,10 +26,12 @@ public class TrafficDAO extends AbstractDAO<TrafficData> {
 
     @Override
     public int insert(TrafficData data) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, data.getLocation());
             stmt.setDouble(2, data.getLatitude());
             stmt.setDouble(3, data.getLongitude());
@@ -48,6 +50,7 @@ public class TrafficDAO extends AbstractDAO<TrafficData> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -64,10 +67,12 @@ public class TrafficDAO extends AbstractDAO<TrafficData> {
 
     @Override
     public TrafficData findById(int id) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_ID);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             if (rs.next()) return mapResultSet(rs);
@@ -77,16 +82,19 @@ public class TrafficDAO extends AbstractDAO<TrafficData> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     @Override
     public List<TrafficData> findAll() throws DatabaseException {
         List<TrafficData> dataList = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ALL);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ALL);
             rs = stmt.executeQuery();
             while (rs.next()) dataList.add(mapResultSet(rs));
             return dataList;
@@ -95,6 +103,7 @@ public class TrafficDAO extends AbstractDAO<TrafficData> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -108,10 +117,12 @@ public class TrafficDAO extends AbstractDAO<TrafficData> {
      */
     public List<TrafficData> findAlerts() throws DatabaseException {
         List<TrafficData> alerts = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ALERTS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ALERTS);
             rs = stmt.executeQuery();
             while (rs.next()) alerts.add(mapResultSet(rs));
             return alerts;
@@ -120,6 +131,7 @@ public class TrafficDAO extends AbstractDAO<TrafficData> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 

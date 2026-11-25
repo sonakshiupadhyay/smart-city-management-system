@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="pageTitle" value="Submit Feedback - SmartCity AI" />
+<c:set var="pageTitle" value="Submit Feedback - SmartCity" />
 <c:set var="activeMenu" value="feedback" />
 <jsp:include page="../common/header.jsp" />
 

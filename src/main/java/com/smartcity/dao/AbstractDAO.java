@@ -8,17 +8,25 @@ import java.sql.*;
  * AbstractDAO - Abstract base class for all DAO implementations.
  * Demonstrates Abstract class and provides common JDBC utility methods.
  * Uses Generics for type safety.
- * 
+ *
+ * <p>All database operations obtain a connection from the HikariCP pool
+ * and return it after use via try-with-resources, ensuring concurrent
+ * servlet requests each get their own connection.</p>
+ *
  * @param <T> the entity type
  * @author Smart City Management System
  */
 public abstract class AbstractDAO<T> implements GenericDAO<T> {
     
     /**
-     * Gets a database connection from the Singleton DatabaseConnection.
+     * Gets a database connection from the HikariCP connection pool.
+     * <p>
+     * <strong>IMPORTANT:</strong> Every connection obtained from this method
+     * MUST be closed by the caller (preferably via try-with-resources) so it
+     * is returned to the pool for reuse by other threads.
      * 
-     * @return active database Connection
-     * @throws DatabaseException if connection fails
+     * @return a pooled database Connection
+     * @throws DatabaseException if connection cannot be obtained
      */
     protected Connection getConnection() throws DatabaseException {
         return DatabaseConnection.getInstance().getConnection();
@@ -45,16 +53,28 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
     }
 
     /**
+     * Safely closes a Connection (returns it to the pool).
+     * @param conn the Connection to close
+     */
+    protected void closeConnection(Connection conn) {
+        if (conn != null) {
+            try { conn.close(); } catch (SQLException e) { /* Ignored */ }
+        }
+    }
+
+    /**
      * Executes a count query.
      * @param sql the SQL count query
      * @return the count result
      * @throws DatabaseException if query fails
      */
     protected int executeCount(String sql) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(sql);
+            conn = getConnection();
+            stmt = conn.prepareStatement(sql);
             rs = stmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -65,6 +85,7 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -76,15 +97,18 @@ public abstract class AbstractDAO<T> implements GenericDAO<T> {
      * @throws DatabaseException if query fails
      */
     protected int executeUpdate(String sql, Object... params) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         try {
-            stmt = getConnection().prepareStatement(sql);
+            conn = getConnection();
+            stmt = conn.prepareStatement(sql);
             setParameters(stmt, params);
             return stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseException("Update query failed: " + e.getMessage(), e);
         } finally {
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 

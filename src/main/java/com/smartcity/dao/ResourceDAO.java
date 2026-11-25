@@ -27,10 +27,12 @@ public class ResourceDAO extends AbstractDAO<Resource> {
 
     @Override
     public int insert(Resource resource) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, resource.getResourceType());
             stmt.setString(2, resource.getResourceName());
             stmt.setString(3, resource.getLocation());
@@ -50,6 +52,7 @@ public class ResourceDAO extends AbstractDAO<Resource> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -67,10 +70,12 @@ public class ResourceDAO extends AbstractDAO<Resource> {
 
     @Override
     public Resource findById(int id) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_ID);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             if (rs.next()) return mapResultSet(rs);
@@ -80,16 +85,19 @@ public class ResourceDAO extends AbstractDAO<Resource> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     @Override
     public List<Resource> findAll() throws DatabaseException {
         List<Resource> resources = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ALL);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ALL);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 resources.add(mapResultSet(rs));
@@ -100,6 +108,7 @@ public class ResourceDAO extends AbstractDAO<Resource> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -113,10 +122,12 @@ public class ResourceDAO extends AbstractDAO<Resource> {
      */
     public List<Resource> findByType(String type) throws DatabaseException {
         List<Resource> resources = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_TYPE);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_TYPE);
             stmt.setString(1, type);
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -128,6 +139,7 @@ public class ResourceDAO extends AbstractDAO<Resource> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -135,10 +147,12 @@ public class ResourceDAO extends AbstractDAO<Resource> {
      * Counts resources by status.
      */
     public int countByStatus(String status) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(COUNT_BY_STATUS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(COUNT_BY_STATUS);
             stmt.setString(1, status);
             rs = stmt.executeQuery();
             if (rs.next()) return rs.getInt(1);
@@ -148,6 +162,7 @@ public class ResourceDAO extends AbstractDAO<Resource> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 

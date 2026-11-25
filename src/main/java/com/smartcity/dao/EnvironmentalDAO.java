@@ -25,10 +25,12 @@ public class EnvironmentalDAO extends AbstractDAO<EnvironmentalData> {
 
     @Override
     public int insert(EnvironmentalData data) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, data.getLocation());
             stmt.setDouble(2, data.getLatitude());
             stmt.setDouble(3, data.getLongitude());
@@ -50,6 +52,7 @@ public class EnvironmentalDAO extends AbstractDAO<EnvironmentalData> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -67,10 +70,12 @@ public class EnvironmentalDAO extends AbstractDAO<EnvironmentalData> {
 
     @Override
     public EnvironmentalData findById(int id) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_ID);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             if (rs.next()) return mapResultSet(rs);
@@ -80,16 +85,19 @@ public class EnvironmentalDAO extends AbstractDAO<EnvironmentalData> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     @Override
     public List<EnvironmentalData> findAll() throws DatabaseException {
         List<EnvironmentalData> dataList = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ALL);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ALL);
             rs = stmt.executeQuery();
             while (rs.next()) dataList.add(mapResultSet(rs));
             return dataList;
@@ -98,6 +106,7 @@ public class EnvironmentalDAO extends AbstractDAO<EnvironmentalData> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -108,10 +117,12 @@ public class EnvironmentalDAO extends AbstractDAO<EnvironmentalData> {
 
     public List<EnvironmentalData> findAlerts() throws DatabaseException {
         List<EnvironmentalData> alerts = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ALERTS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ALERTS);
             rs = stmt.executeQuery();
             while (rs.next()) alerts.add(mapResultSet(rs));
             return alerts;
@@ -120,6 +131,7 @@ public class EnvironmentalDAO extends AbstractDAO<EnvironmentalData> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 

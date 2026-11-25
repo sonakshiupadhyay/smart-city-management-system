@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * TrafficServlet - Controller for Traffic Monitoring and AI Congestion Optimizations.
+ * TrafficServlet - Controller for Traffic Monitoring and Congestion Analytics.
  * 
  * @author Smart City Management System
  */

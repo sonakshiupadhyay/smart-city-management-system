@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 /**
  * SafetyIncident - Represents public safety incidents.
- * Implements Monitorable for real-time monitoring.
+ * Implements Monitorable for status and alert tracking.
  * 
  * @author Smart City Management System
  */

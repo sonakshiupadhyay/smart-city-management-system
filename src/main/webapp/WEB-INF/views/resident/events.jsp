@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="pageTitle" value="City Events & Real-Time Alerts - SmartCity AI" />
+<c:set var="pageTitle" value="City Events & Bulletins - SmartCity" />
 <c:set var="activeMenu" value="events" />
 <jsp:include page="../common/header.jsp" />
 
@@ -10,8 +10,8 @@
     <main class="main-content">
         <header class="topbar">
             <div class="page-title-group">
-                <h1>City Bulletins &amp; Real-Time Information</h1>
-                <p>Live alerts, scheduled maintenance, traffic diversions &amp; public events across the city</p>
+                <h1>City Bulletins &amp; Active Alerts</h1>
+                <p>Current alerts, scheduled maintenance, traffic diversions &amp; public events across the city</p>
             </div>
             <c:if test="${sessionScope.role == 'ADMIN'}">
                 <div class="topbar-actions">

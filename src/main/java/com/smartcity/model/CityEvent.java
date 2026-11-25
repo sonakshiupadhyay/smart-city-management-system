@@ -3,7 +3,7 @@ package com.smartcity.model;
 import java.sql.Timestamp;
 
 /**
- * CityEvent - Real-time city events and alerts.
+ * CityEvent - City events, maintenance notices, and civic alerts.
  * 
  * @author Smart City Management System
  */

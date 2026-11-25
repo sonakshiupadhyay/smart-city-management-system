@@ -26,10 +26,12 @@ public class SafetyDAO extends AbstractDAO<SafetyIncident> {
 
     @Override
     public int insert(SafetyIncident incident) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, incident.getIncidentType());
             stmt.setString(2, incident.getLocation());
             stmt.setDouble(3, incident.getLatitude());
@@ -47,6 +49,7 @@ public class SafetyDAO extends AbstractDAO<SafetyIncident> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -63,10 +66,12 @@ public class SafetyDAO extends AbstractDAO<SafetyIncident> {
 
     @Override
     public SafetyIncident findById(int id) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_ID);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             if (rs.next()) return mapResultSet(rs);
@@ -76,16 +81,19 @@ public class SafetyDAO extends AbstractDAO<SafetyIncident> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     @Override
     public List<SafetyIncident> findAll() throws DatabaseException {
         List<SafetyIncident> incidents = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ALL);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ALL);
             rs = stmt.executeQuery();
             while (rs.next()) incidents.add(mapResultSet(rs));
             return incidents;
@@ -94,6 +102,7 @@ public class SafetyDAO extends AbstractDAO<SafetyIncident> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -107,10 +116,12 @@ public class SafetyDAO extends AbstractDAO<SafetyIncident> {
      */
     public List<SafetyIncident> findActive() throws DatabaseException {
         List<SafetyIncident> incidents = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ACTIVE);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ACTIVE);
             rs = stmt.executeQuery();
             while (rs.next()) incidents.add(mapResultSet(rs));
             return incidents;
@@ -119,14 +130,17 @@ public class SafetyDAO extends AbstractDAO<SafetyIncident> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     public int countByStatus(String status) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(COUNT_BY_STATUS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(COUNT_BY_STATUS);
             stmt.setString(1, status);
             rs = stmt.executeQuery();
             if (rs.next()) return rs.getInt(1);
@@ -136,15 +150,18 @@ public class SafetyDAO extends AbstractDAO<SafetyIncident> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     public List<SafetyIncident> findBySeverity(String severity) throws DatabaseException {
         List<SafetyIncident> list = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement("SELECT * FROM safety_incidents WHERE severity = ? ORDER BY reported_at DESC");
+            conn = getConnection();
+            stmt = conn.prepareStatement("SELECT * FROM safety_incidents WHERE severity = ? ORDER BY reported_at DESC");
             stmt.setString(1, severity);
             rs = stmt.executeQuery();
             while (rs.next()) list.add(mapResultSet(rs));
@@ -154,14 +171,17 @@ public class SafetyDAO extends AbstractDAO<SafetyIncident> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     public int countBySeverity(String severity) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement("SELECT COUNT(*) FROM safety_incidents WHERE severity = ?");
+            conn = getConnection();
+            stmt = conn.prepareStatement("SELECT COUNT(*) FROM safety_incidents WHERE severity = ?");
             stmt.setString(1, severity);
             rs = stmt.executeQuery();
             if (rs.next()) return rs.getInt(1);
@@ -171,6 +191,7 @@ public class SafetyDAO extends AbstractDAO<SafetyIncident> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 

@@ -8,8 +8,13 @@ import java.util.*;
 import java.util.concurrent.*;
 
 /**
- * IoTSimulationService - Simulates live IoT sensor telemetries in background threads.
+ * IoTSimulationService - Generates simulated sensor telemetry in background threads.
  * Demonstrates Multithreading, Synchronization, and Thread-Safe Collections.
+ * 
+ * <p><strong>Important:</strong> This service does NOT connect to real IoT hardware
+ * or external sensor APIs. All telemetry values are randomly generated for
+ * demonstration purposes. In a production system, this would be replaced by
+ * real device integrations (e.g., MQTT brokers, sensor gateways).</p>
  * 
  * @author Smart City Management System
  */
@@ -63,7 +68,8 @@ public class IoTSimulationService {
     }
 
     /**
-     * Simulates live telemetry values and updates database and thread-safe caches.
+     * Generates randomized telemetry values and updates database and thread-safe caches.
+     * All readings are simulated — no real sensor hardware is involved.
      */
     private void simulateTelemetry() {
         try {
@@ -118,10 +124,25 @@ public class IoTSimulationService {
         return latestReadingsCache.get(sensorId);
     }
 
+    /**
+     * Stops the background simulation only if an instance was already initialized.
+     */
+    public static void shutdownIfRunning() {
+        IoTSimulationService current = instance;
+        if (current != null) {
+            current.stopSimulation();
+        }
+    }
+
     public synchronized void stopSimulation() {
         if (isRunning) {
-            scheduler.shutdown();
+            scheduler.shutdownNow();
             isRunning = false;
+        }
+        synchronized (IoTSimulationService.class) {
+            if (instance == this) {
+                instance = null;
+            }
         }
     }
 }

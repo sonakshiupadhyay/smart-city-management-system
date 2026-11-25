@@ -13,7 +13,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * AnalyticsServiceTest - Verifies Big Data & AI analytics algorithms.
+ * AnalyticsServiceTest - Verifies rule-based analytics and statistical calculations.
  */
 public class AnalyticsServiceTest {
 

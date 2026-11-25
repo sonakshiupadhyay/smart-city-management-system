@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="pageTitle" value="Traffic Monitoring - SmartCity AI" />
+<c:set var="pageTitle" value="Traffic Monitoring - SmartCity" />
 <c:set var="activeMenu" value="traffic" />
 <jsp:include page="../common/header.jsp" />
 
@@ -11,7 +11,7 @@
         <header class="topbar">
             <div class="page-title-group">
                 <h1>Smart Traffic Operations</h1>
-                <p>Real-time vehicle telemetry, adaptive signal suggestions &amp; congestion mitigation</p>
+                <p>Traffic corridor records, rule-based signal suggestions &amp; congestion analytics</p>
             </div>
             <div class="topbar-actions">
                 <button type="button" class="btn btn-primary" onclick="openModal('addTrafficModal')">
@@ -27,10 +27,10 @@
             <div class="alert alert-danger"><span>⚠</span> ${param.error}</div>
         </c:if>
 
-        <!-- AI Congestion Optimization Recommendations -->
+        <!-- Congestion Analytics Recommendations -->
         <div class="panel-card" style="border-left: 4px solid var(--primary);">
             <div class="panel-header">
-                <h2 class="panel-title"><span>🤖</span> AI Traffic Routing Recommendations</h2>
+                <h2 class="panel-title"><span>📊</span> Traffic Routing Recommendations (Rule-Based)</h2>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
                 <c:forEach var="item" items="${bottleneckAnalysis}">
@@ -43,7 +43,7 @@
                             🚗 Vehicles: ${item.vehicleCount} | ⚡ Speed: ${item.averageSpeed} km/h
                         </p>
                         <p style="font-size: 0.85rem; color: var(--primary);">
-                            💡 ${item.aiRecommendation}
+                            💡 ${item.recommendation}
                         </p>
                     </div>
                 </c:forEach>

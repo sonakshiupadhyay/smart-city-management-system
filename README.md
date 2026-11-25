@@ -1,24 +1,27 @@
-# 🏙️ Smart City Management System (IoT, AI & Big Data)
+# 🏙️ Smart City Management System
 
-A comprehensive enterprise-grade Java Web Application for smart urban infrastructure monitoring and municipal operations, built with **Java Servlets, JSP/JSTL, JDBC, MySQL, Multithreading, and AI/Big Data Analytics**.
+A comprehensive Java Web Application for smart urban infrastructure monitoring and municipal operations, built with **Java Servlets, JSP/JSTL, JDBC, MySQL, HikariCP Connection Pooling, and Multithreading**.
+
+> **Note on "IoT" and "Analytics" features:**  
+> The sensor telemetry in this project is **simulated** — `IoTSimulationService` generates randomized readings in a background thread; no real IoT hardware or external sensor APIs are connected. Similarly, the analytics and optimization features (resource efficiency, traffic bottleneck detection, environmental scoring) use **rule-based heuristics and threshold comparisons**, not machine-learning or AI models. If real integrations are added in the future, these labels can be updated accordingly.
 
 ## 👥 User Roles & Capabilities
 
 ### 1. 🏛️ City Administrator
-- **Resource Management**: Allocate and manage municipal energy grids, water plants, and recycling facilities with AI efficiency scoring.
-- **Traffic Monitoring**: Real-time traffic congestion telemetry, vehicle density tracking, and AI rerouting suggestions.
-- **Public Safety & CCTV**: Monitor emergency security alerts and live CCTV sensor feeds with rapid incident response dispatch.
+- **Resource Management**: Allocate and manage municipal energy grids, water plants, and recycling facilities with rule-based efficiency scoring.
+- **Traffic Monitoring**: Traffic congestion telemetry (simulated), vehicle density tracking, and threshold-based routing suggestions.
+- **Public Safety**: Monitor emergency security alerts and incident response dispatch.
 - **Municipal Services & Feedback**: Review resident utility requests and respond to citizen satisfaction reviews.
 
 ### 2. 📐 Urban Planner
 - **Infrastructure Planning**: Propose capital development projects, track allocated budgets against expenditures, and evaluate community impact scores.
-- **Environmental Monitoring**: Sensor-driven Air Quality Index (AQI), ambient noise levels (dB), PM2.5 pollution, and greenhouse emissions (CO2).
-- **Sustainability Score Engine**: Calculates the city's composite Eco-Index score out of 100 with automated mitigation advisories.
+- **Environmental Monitoring**: Air Quality Index (AQI), ambient noise levels (dB), PM2.5 pollution, and greenhouse emissions (CO2) — data is seeded or simulated.
+- **Sustainability Score Engine**: Calculates the city's composite Eco-Index score out of 100 with automated mitigation advisories using threshold rules.
 
 ### 3. 🏡 Resident Citizen
 - **Municipal Service Access**: File 1-click tickets for road repairs, water supply disruptions, street lighting, and waste collection.
 - **Feedback & Review System**: Rate city services with 1-5 star ratings and receive official administrative responses.
-- **Real-Time City Information**: View live weather advisories, traffic diversions, festival notifications, and emergency alerts.
+- **City Information**: View weather advisories, traffic diversions, festival notifications, and emergency alerts.
 
 ---
 
@@ -33,8 +36,23 @@ The system utilizes MySQL database `smart_city_db` with 10 tables:
 - `environmental_data`: AQI, noise, CO2, temperature, and humidity readings.
 - `service_requests`: Citizen utility tickets with assigned department and resolution notes.
 - `feedback`: Resident ratings (1-5 stars) and administrative responses.
-- `city_events`: Real-time emergency, weather, and civic bulletins.
-- `iot_sensors`: IoT sensor hardware deployment nodes and live telemetry.
+- `city_events`: Emergency, weather, and civic bulletins.
+- `iot_sensors`: Sensor deployment nodes and simulated telemetry readings.
+
+### Connection Pooling
+
+Database connections are managed by **HikariCP**, a high-performance JDBC connection pool.
+Each servlet request obtains its own connection from the pool and returns it after use,
+ensuring reliable concurrent request handling.
+
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| Max Pool Size | 20 | Concurrent connections for servlet threads |
+| Min Idle | 5 | Pre-warmed idle connections |
+| Connection Timeout | 10 s | Max wait to obtain a connection |
+| Idle Timeout | 5 min | Idle connection retirement |
+| Max Lifetime | 10 min | Connection recycling |
+| Leak Detection | 30 s | Warns if connections are held too long |
 
 ---
 
@@ -93,5 +111,5 @@ mvn test
 ```
 **Test Coverage:**
 - `ModelHierarchyTest`: Validates OOP inheritance, polymorphism, and interface compliance.
-- `AnalyticsServiceTest`: Tests AI resource optimization, traffic bottlenecks, and environmental index calculation.
+- `AnalyticsServiceTest`: Tests resource optimization, traffic bottleneck detection, and environmental index calculation using rule-based logic.
 - `PasswordUtilTest`: Verifies SHA-256 password hashing and verification.

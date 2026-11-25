@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart City Management System - AI &amp; IoT Urban Infrastructure</title>
+    <title>Smart City Management System - Urban Infrastructure Analytics</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
 </head>
 <body>
@@ -24,12 +24,12 @@
     <main>
         <section class="hero-section">
             <div class="hero-pill">
-                <span class="pulse-dot"></span> Next-Gen Cyber-Physical Smart City Network
+                <span class="pulse-dot"></span> Urban Infrastructure Analytics &amp; Operations Portal
             </div>
-            <h1 class="hero-title">Empowering Cities with IoT Sensors, AI Analytics &amp; Big Data</h1>
+            <h1 class="hero-title">Urban Operations with Rule-Based Analytics &amp; Simulated Telemetry</h1>
             <p class="hero-desc">
-                An integrated urban ecosystem monitoring and optimizing energy grids, municipal water reservoirs, 
-                smart traffic flow, air quality indices, and citizen public safety in real-time.
+                An integrated urban management portal tracking municipal resources, traffic corridors, 
+                environmental sustainability indices, and public safety incidents using rule-based analytics and simulated sensor telemetry.
             </p>
             <div style="display: flex; gap: 1rem; justify-content: center;">
                 <a href="${pageContext.request.contextPath}/login.jsp" class="btn btn-primary" style="padding: 0.9rem 2rem; font-size: 1.05rem;">
@@ -54,12 +54,12 @@
                     <div class="role-icon-box">🏛️</div>
                     <h3 style="font-size: 1.4rem; margin-bottom: 0.75rem;">City Administrator</h3>
                     <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 1.5rem;">
-                        Oversee city-wide operations with real-time AI resource optimization reports, 
-                        traffic congestion algorithms, and CCTV incident response management.
+                        Oversee city-wide operations with rule-based resource analytics reports, 
+                        traffic congestion monitoring, and incident response management.
                     </p>
                     <ul style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem; list-style-position: inside; line-height: 1.8;">
                         <li>Energy, Water &amp; Waste Management</li>
-                        <li>Real-Time Traffic Congestion Alerts</li>
+                        <li>Traffic Congestion Monitoring &amp; Alerts</li>
                         <li>Emergency &amp; Public Safety Dispatch</li>
                     </ul>
                     <a href="${pageContext.request.contextPath}/login.jsp?demoRole=ADMIN" class="btn btn-secondary" style="width: 100%;">
@@ -107,7 +107,7 @@
     </main>
 
     <footer class="footer">
-        <p>&copy; 2026 Smart City Management System. Developed with Java Servlets, JDBC, Big Data Analytics &amp; IoT telemetry.</p>
+        <p>&copy; 2026 Smart City Management System. Developed with Java Servlets, JDBC, rule-based analytics &amp; simulated sensor telemetry.</p>
     </footer>
 
 </body>

@@ -29,10 +29,12 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
 
     @Override
     public int insert(Feedback feedback) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, feedback.getResidentId());
             stmt.setString(2, feedback.getCategory());
             stmt.setString(3, feedback.getSubject());
@@ -49,6 +51,7 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -66,10 +69,12 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
 
     @Override
     public Feedback findById(int id) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_ID);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             if (rs.next()) return mapResultSet(rs);
@@ -79,16 +84,19 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     @Override
     public List<Feedback> findAll() throws DatabaseException {
         List<Feedback> list = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ALL);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ALL);
             rs = stmt.executeQuery();
             while (rs.next()) list.add(mapResultSet(rs));
             return list;
@@ -97,6 +105,7 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -107,10 +116,12 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
 
     public List<Feedback> findByResidentId(int residentId) throws DatabaseException {
         List<Feedback> list = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_RESIDENT);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_RESIDENT);
             stmt.setInt(1, residentId);
             rs = stmt.executeQuery();
             while (rs.next()) list.add(mapResultSet(rs));
@@ -120,14 +131,17 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     public double getAverageRating() throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(AVERAGE_RATING);
+            conn = getConnection();
+            stmt = conn.prepareStatement(AVERAGE_RATING);
             rs = stmt.executeQuery();
             if (rs.next()) return rs.getDouble(1);
             return 0.0;
@@ -136,6 +150,7 @@ public class FeedbackDAO extends AbstractDAO<Feedback> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 

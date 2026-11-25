@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="pageTitle" value="Environmental Monitoring - SmartCity AI" />
+<c:set var="pageTitle" value="Environmental Monitoring - SmartCity" />
 <c:set var="activeMenu" value="environment" />
 <jsp:include page="../common/header.jsp" />
 
@@ -11,7 +11,7 @@
         <header class="topbar">
             <div class="page-title-group">
                 <h1>Environmental Impact &amp; Sustainability</h1>
-                <p>Sensor-driven air quality (AQI), greenhouse emissions, noise decibels &amp; mitigation advisory</p>
+                <p>Tracked &amp; simulated air quality (AQI), greenhouse emissions, noise decibels &amp; rule-based advisory</p>
             </div>
             <div class="topbar-actions">
                 <button type="button" class="btn btn-primary" onclick="openModal('addEnvModal')">
@@ -45,7 +45,7 @@
         <!-- Environmental Stations Table -->
         <div class="panel-card">
             <div class="panel-header">
-                <h2 class="panel-title"><span>🌿</span> Urban Environmental Sensor Stations</h2>
+                <h2 class="panel-title"><span>🌿</span> Urban Environmental Monitoring Stations</h2>
             </div>
             <div class="table-responsive">
                 <table class="data-table">

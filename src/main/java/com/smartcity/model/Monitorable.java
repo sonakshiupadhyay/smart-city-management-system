@@ -3,7 +3,7 @@ package com.smartcity.model;
 /**
  * Interface: Monitorable
  * Demonstrates Interface concept in Java OOP.
- * Any entity that can be monitored in real-time implements this interface.
+ * Any entity whose operational status and alerts can be monitored implements this interface.
  * 
  * @author Smart City Management System
  */

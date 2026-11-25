@@ -3,7 +3,7 @@ package com.smartcity.model;
 import java.sql.Timestamp;
 
 /**
- * EnvironmentalData - Environmental monitoring data from IoT sensors.
+ * EnvironmentalData - Tracked and simulated environmental monitoring metrics.
  * Implements Monitorable and Reportable (Multiple Interface Implementation).
  * 
  * @author Smart City Management System

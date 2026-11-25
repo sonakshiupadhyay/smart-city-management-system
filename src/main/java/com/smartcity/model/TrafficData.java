@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 /**
  * TrafficData - Implements Monitorable interface.
- * Represents real-time traffic monitoring data from IoT sensors.
+ * Represents traffic corridor monitoring and congestion analytics data.
  * 
  * @author Smart City Management System
  */

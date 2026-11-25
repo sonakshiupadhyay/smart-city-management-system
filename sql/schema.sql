@@ -1,7 +1,7 @@
 -- ============================================================
 -- Smart City Management System - Database Schema
 -- ============================================================
--- This schema supports IoT, AI, and Big Data integration
+-- This schema supports rule-based analytics and simulated telemetry
 -- for managing urban infrastructure and services.
 -- ============================================================
 
@@ -46,7 +46,7 @@ CREATE TABLE resources (
 );
 
 -- ============================================================
--- 3. TRAFFIC DATA TABLE - Real-time traffic monitoring
+-- 3. TRAFFIC DATA TABLE - Traffic corridor monitoring & analytics
 -- ============================================================
 CREATE TABLE traffic_data (
     traffic_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -160,7 +160,7 @@ CREATE TABLE feedback (
 );
 
 -- ============================================================
--- 9. CITY EVENTS TABLE - Real-time city events and alerts
+-- 9. CITY EVENTS TABLE - City events and active civic alerts
 -- ============================================================
 CREATE TABLE city_events (
     event_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -180,7 +180,7 @@ CREATE TABLE city_events (
 );
 
 -- ============================================================
--- 10. IOT SENSORS TABLE - IoT device management
+-- 10. IOT SENSORS TABLE - Simulated sensor node registry
 -- ============================================================
 CREATE TABLE iot_sensors (
     sensor_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -238,11 +238,11 @@ INSERT INTO safety_incidents (incident_type, location, latitude, longitude, desc
 
 -- Sample Infrastructure Projects
 INSERT INTO infrastructure_projects (project_name, description, category, location, planned_by, status, budget, spent_amount, start_date, end_date, impact_score) VALUES
-('Smart Traffic Signal System', 'AI-powered traffic signals with adaptive timing based on real-time traffic flow', 'TECHNOLOGY', 'City-wide', 3, 'IN_PROGRESS', 5000000, 2100000, '2026-01-15', '2026-12-31', 8.5),
+('Smart Traffic Signal System', 'Rule-based adaptive traffic signals using corridor congestion metrics', 'TECHNOLOGY', 'City-wide', 3, 'IN_PROGRESS', 5000000, 2100000, '2026-01-15', '2026-12-31', 8.5),
 ('Green Belt Extension', 'Extension of city green belt by 15 km along the river', 'PUBLIC_SPACES', 'River Front Area', 3, 'APPROVED', 8000000, 500000, '2026-03-01', '2027-06-30', 9.2),
 ('Metro Line Phase 3', 'Construction of metro line connecting East and West zones', 'TRANSPORTATION', 'East-West Corridor', 4, 'PROPOSED', 150000000, 0, '2027-01-01', '2030-12-31', 9.8),
 ('Solar Rooftop Initiative', 'Installing solar panels on all government buildings', 'UTILITIES', 'Government Buildings', 4, 'IN_PROGRESS', 12000000, 4500000, '2026-02-01', '2026-11-30', 8.0),
-('Smart Water Grid', 'IoT-enabled water distribution system with leak detection', 'UTILITIES', 'Central & North Zones', 3, 'APPROVED', 25000000, 1000000, '2026-06-01', '2027-12-31', 8.8);
+('Smart Water Grid', 'Automated water distribution monitoring with threshold-based leak alerts', 'UTILITIES', 'Central & North Zones', 3, 'APPROVED', 25000000, 1000000, '2026-06-01', '2027-12-31', 8.8);
 
 -- Sample Environmental Data
 INSERT INTO environmental_data (location, latitude, longitude, air_quality_index, noise_level, pollution_level, temperature, humidity, co2_level, status, recommendation) VALUES
@@ -278,7 +278,7 @@ INSERT INTO city_events (title, description, event_type, location, latitude, lon
 ('Water Supply Disruption', 'Scheduled maintenance of water treatment plant', 'MAINTENANCE', 'North Zone', 13.0358, 77.5970, 'WARNING', '2026-10-12 08:00:00', '2026-10-12 16:00:00', TRUE, 2),
 ('Traffic Diversion - Marathon', 'City marathon event. Roads closed in Central District.', 'TRAFFIC', 'Central District', 12.9750, 77.6000, 'WARNING', '2026-10-15 05:00:00', '2026-10-15 12:00:00', TRUE, 1);
 
--- Sample IoT Sensors
+-- Sample Simulated Sensor Nodes
 INSERT INTO iot_sensors (sensor_name, sensor_type, location, latitude, longitude, status, last_reading, last_reading_time) VALUES
 ('TRF-001', 'TRAFFIC', 'MG Road Junction', 12.9716, 77.5946, 'ACTIVE', 450, NOW()),
 ('TRF-002', 'TRAFFIC', 'Brigade Road', 12.9719, 77.6072, 'ACTIVE', 280, NOW()),

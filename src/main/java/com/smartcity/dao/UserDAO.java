@@ -39,10 +39,12 @@ public class UserDAO extends AbstractDAO<User> {
 
     @Override
     public int insert(User user) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getPassword());
             stmt.setString(3, user.getEmail());
@@ -67,6 +69,7 @@ public class UserDAO extends AbstractDAO<User> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -94,10 +97,12 @@ public class UserDAO extends AbstractDAO<User> {
 
     @Override
     public User findById(int id) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_ID);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             if (rs.next()) {
@@ -109,16 +114,19 @@ public class UserDAO extends AbstractDAO<User> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     @Override
     public List<User> findAll() throws DatabaseException {
         List<User> users = new ArrayList<>();  // Using Collections
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ALL);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ALL);
             rs = stmt.executeQuery();
             while (rs.next()) {
                 users.add(mapResultSetToUser(rs));
@@ -129,6 +137,7 @@ public class UserDAO extends AbstractDAO<User> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -141,10 +150,12 @@ public class UserDAO extends AbstractDAO<User> {
      * Finds a user by username.
      */
     public User findByUsername(String username) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_USERNAME);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_USERNAME);
             stmt.setString(1, username);
             rs = stmt.executeQuery();
             if (rs.next()) {
@@ -156,6 +167,7 @@ public class UserDAO extends AbstractDAO<User> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -164,10 +176,12 @@ public class UserDAO extends AbstractDAO<User> {
      * Returns the User object if credentials are valid, null otherwise.
      */
     public User authenticate(String username, String password) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(AUTHENTICATE);
+            conn = getConnection();
+            stmt = conn.prepareStatement(AUTHENTICATE);
             stmt.setString(1, username);
             stmt.setString(2, password);
             rs = stmt.executeQuery();
@@ -180,6 +194,7 @@ public class UserDAO extends AbstractDAO<User> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -189,10 +204,12 @@ public class UserDAO extends AbstractDAO<User> {
      */
     public List<User> findByRole(String role) throws DatabaseException {
         List<User> users = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_ROLE);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_ROLE);
             stmt.setString(1, role);
             rs = stmt.executeQuery();
             while (rs.next()) {
@@ -204,6 +221,7 @@ public class UserDAO extends AbstractDAO<User> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -211,10 +229,12 @@ public class UserDAO extends AbstractDAO<User> {
      * Checks if a username already exists in the database.
      */
     public boolean usernameExists(String username) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement("SELECT COUNT(*) FROM users WHERE username = ?");
+            conn = getConnection();
+            stmt = conn.prepareStatement("SELECT COUNT(*) FROM users WHERE username = ?");
             stmt.setString(1, username);
             rs = stmt.executeQuery();
             return rs.next() && rs.getInt(1) > 0;
@@ -223,6 +243,7 @@ public class UserDAO extends AbstractDAO<User> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -230,10 +251,12 @@ public class UserDAO extends AbstractDAO<User> {
      * Checks if an email already exists in the database.
      */
     public boolean emailExists(String email) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement("SELECT COUNT(*) FROM users WHERE email = ?");
+            conn = getConnection();
+            stmt = conn.prepareStatement("SELECT COUNT(*) FROM users WHERE email = ?");
             stmt.setString(1, email);
             rs = stmt.executeQuery();
             return rs.next() && rs.getInt(1) > 0;
@@ -242,6 +265,7 @@ public class UserDAO extends AbstractDAO<User> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 

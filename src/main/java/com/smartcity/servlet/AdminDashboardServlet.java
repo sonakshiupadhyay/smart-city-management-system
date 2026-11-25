@@ -41,7 +41,7 @@ public class AdminDashboardServlet extends HttpServlet {
         this.sensorDAO = new IoTSensorDAO();
         this.analyticsService = new AnalyticsService();
 
-        // Start background IoT telemetry simulation
+        // Start background simulated sensor telemetry
         IoTSimulationService.getInstance().startSimulation();
     }
 
@@ -69,7 +69,7 @@ public class AdminDashboardServlet extends HttpServlet {
             int totalFeedback = feedbackDAO.count();
             double avgRating = feedbackDAO.getAverageRating();
 
-            // IoT sensor count
+            // Active simulated sensor node count
             int activeSensors = sensorDAO.findActive().size();
             List<String> recentAlerts = IoTSimulationService.getInstance().getRecentAlerts();
 

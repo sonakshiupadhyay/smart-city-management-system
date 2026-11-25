@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * SensorApiServlet - REST JSON endpoint for Real-Time IoT telemetries and live dashboard feeds.
+ * SensorApiServlet - REST JSON endpoint for simulated sensor telemetry and live dashboard feeds.
  * 
  * @author Smart City Management System
  */

@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * SafetyServlet - Controller for Public Safety Management and CCTV Feeds.
+ * SafetyServlet - Controller for Public Safety Management and Simulated Security Nodes.
  * 
  * @author Smart City Management System
  */

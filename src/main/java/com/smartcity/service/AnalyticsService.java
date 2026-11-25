@@ -7,15 +7,20 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * AnalyticsService - Big Data and AI analytics calculations for city operations.
+ * AnalyticsService - Rule-based analytics and statistical calculations for city operations.
  * Demonstrates Collections, Generics, Stream API, and complex business logic.
+ * 
+ * <p>Note: The calculations in this service are rule-based heuristics and threshold
+ * comparisons, not machine-learning or AI models. Labels such as "optimization" and
+ * "recommendation" refer to deterministic logic applied to the data.</p>
  * 
  * @author Smart City Management System
  */
 public class AnalyticsService {
 
     /**
-     * Big Data Analytics: Calculates resource efficiency statistics across all city resources.
+     * Resource Analytics: Calculates resource efficiency statistics across all city resources
+     * using threshold-based heuristics.
      */
     public Map<String, Object> calculateResourceOptimization(List<Resource> resources) {
         Map<String, Object> report = new HashMap<>();
@@ -23,7 +28,7 @@ public class AnalyticsService {
             report.put("totalCapacity", 0.0);
             report.put("totalUsage", 0.0);
             report.put("overallEfficiency", 100.0);
-            report.put("optimizationRecommendations", Collections.emptyList());
+            report.put("recommendations", Collections.emptyList());
             return report;
         }
 
@@ -51,7 +56,8 @@ public class AnalyticsService {
     }
 
     /**
-     * AI Traffic Optimization: Analyzes congestion hotspots and suggests smart alternate routes.
+     * Traffic Analytics: Analyzes congestion hotspots and suggests alternate routes
+     * based on configurable threshold rules.
      */
     public List<Map<String, Object>> analyzeTrafficBottlenecks(List<TrafficData> trafficList) {
         if (trafficList == null) return Collections.emptyList();
@@ -65,7 +71,7 @@ public class AnalyticsService {
                 map.put("vehicleCount", t.getVehicleCount());
                 map.put("averageSpeed", t.getAverageSpeed());
                 map.put("congestionLevel", t.getCongestionLevel());
-                map.put("aiRecommendation", t.getSuggestion() != null ? t.getSuggestion() : "Adjust adaptive traffic signal intervals by +15s.");
+                map.put("recommendation", t.getSuggestion() != null ? t.getSuggestion() : "Adjust adaptive traffic signal intervals by +15s.");
                 return map;
             })
             .collect(Collectors.toList());

@@ -9,7 +9,7 @@ import java.sql.Timestamp;
  * Responsibilities:
  * - Service Access
  * - Feedback Submission
- * - Real-time Information
+ * - City Bulletins & Alerts
  * 
  * @author Smart City Management System
  */

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="pageTitle" value="Resident Citizen Portal - SmartCity AI" />
+<c:set var="pageTitle" value="Resident Citizen Portal - SmartCity" />
 <c:set var="activeMenu" value="dashboard" />
 <jsp:include page="../common/header.jsp" />
 
@@ -11,7 +11,7 @@
         <header class="topbar">
             <div class="page-title-group">
                 <h1>Resident Citizen Portal</h1>
-                <p>Welcome back, ${sessionScope.fullName != null ? sessionScope.fullName : 'Resident'}. Access city municipal services &amp; real-time city bulletins.</p>
+                <p>Welcome back, ${sessionScope.fullName != null ? sessionScope.fullName : 'Resident'}. Access city municipal services &amp; active city bulletins.</p>
             </div>
             <div class="topbar-actions">
                 <a href="${pageContext.request.contextPath}/resident/services" class="btn btn-primary">
@@ -55,15 +55,15 @@
                     <span class="stat-icon">📢</span>
                 </div>
                 <div class="stat-value">${activeAlerts.size()}</div>
-                <div class="stat-subtext">Live weather, traffic &amp; emergency alerts</div>
+                <div class="stat-subtext">Active weather, traffic &amp; emergency alerts</div>
             </div>
         </div>
 
-        <!-- Real-Time Alerts & City Services Status -->
+        <!-- Active Alerts & City Services Status -->
         <div class="grid-two-col">
             <div class="panel-card">
                 <div class="panel-header">
-                    <h2 class="panel-title"><span>📢</span> Real-Time City Alerts &amp; Event Bulletins</h2>
+                    <h2 class="panel-title"><span>📢</span> Active City Alerts &amp; Event Bulletins</h2>
                     <a href="${pageContext.request.contextPath}/resident/events" class="btn btn-secondary" style="font-size:0.8rem; padding:0.35rem 0.75rem;">View All</a>
                 </div>
                 <div style="display:flex; flex-direction:column; gap:0.75rem;">

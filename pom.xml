@@ -11,8 +11,9 @@
 
     <name>Smart City Management System</name>
     <description>
-        A web-based smart city management system using IoT, AI, and Big Data
-        to enhance urban living and infrastructure management.
+        A web-based smart city management system using simulated IoT telemetry,
+        rule-based analytics, and data-driven dashboards to enhance urban living
+        and infrastructure management.
     </description>
 
     <properties>
@@ -72,6 +73,27 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>2.2.224</version>
+        </dependency>
+
+        <!-- HikariCP Connection Pool for concurrent request handling -->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+
+        <!-- SLF4J API (required by HikariCP) -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+
+        <!-- SLF4J Simple binding -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.36</version>
         </dependency>
     </dependencies>
 

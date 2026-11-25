@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="pageTitle" value="Public Safety & CCTV - SmartCity AI" />
+<c:set var="pageTitle" value="Public Safety - SmartCity" />
 <c:set var="activeMenu" value="safety" />
 <jsp:include page="../common/header.jsp" />
 
@@ -11,7 +11,7 @@
         <header class="topbar">
             <div class="page-title-group">
                 <h1>Public Safety &amp; Emergency Response</h1>
-                <p>CCTV surveillance feeds, emergency dispatch &amp; incident lifecycle tracking</p>
+                <p>Simulated security node status, emergency dispatch &amp; incident lifecycle tracking</p>
             </div>
             <div class="topbar-actions">
                 <button type="button" class="btn btn-primary" onclick="openModal('reportIncidentModal')">
@@ -27,10 +27,10 @@
             <div class="alert alert-danger"><span>⚠</span> ${param.error}</div>
         </c:if>
 
-        <!-- Simulated CCTV Camera Surveillance Grid -->
+        <!-- Simulated Security Node Status Grid -->
         <div class="panel-card">
             <div class="panel-header">
-                <h2 class="panel-title"><span>📹</span> City Security CCTV Camera Feeds (Live Streams)</h2>
+                <h2 class="panel-title"><span>📹</span> Security Monitoring Nodes (Simulated Status)</h2>
             </div>
             <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem;">
                 <c:forEach var="cam" items="${cctvSensors}">

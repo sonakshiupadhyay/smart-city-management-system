@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="pageTitle" value="City Administrator Dashboard - SmartCity AI" />
+<c:set var="pageTitle" value="City Administrator Dashboard - SmartCity" />
 <c:set var="activeMenu" value="dashboard" />
 <jsp:include page="../common/header.jsp" />
 
@@ -11,11 +11,11 @@
         <header class="topbar">
             <div class="page-title-group">
                 <h1>City Operations Center</h1>
-                <p>Real-time infrastructure management, resource allocation &amp; public safety surveillance</p>
+                <p>Infrastructure management, rule-based resource analytics &amp; simulated telemetry overview</p>
             </div>
             <div class="topbar-actions">
                 <div class="live-pulse-badge">
-                    <span class="pulse-dot"></span> IoT Grid Live: <span id="liveSensorCount">${activeSensors}</span> Active Nodes
+                    <span class="pulse-dot"></span> Sensor Grid (Simulated): <span id="liveSensorCount">${activeSensors}</span> Active Nodes
                 </div>
             </div>
         </header>
@@ -59,7 +59,7 @@
             </div>
         </div>
 
-        <!-- Charts and AI Insights -->
+        <!-- Charts and Analytics Insights -->
         <div class="grid-two-col">
             <div class="panel-card">
                 <div class="panel-header">
@@ -72,7 +72,7 @@
 
             <div class="panel-card">
                 <div class="panel-header">
-                    <h2 class="panel-title"><span>🤖</span> AI Resource Optimization Engine</h2>
+                    <h2 class="panel-title"><span>📈</span> Resource Optimization Analytics</h2>
                 </div>
                 <div style="font-size: 0.9rem; line-height: 1.6;">
                     <c:choose>
@@ -93,11 +93,11 @@
             </div>
         </div>
 
-        <!-- Live Telemetry Alerts & Traffic Hotspots -->
+        <!-- Simulated Telemetry Alerts & Traffic Hotspots -->
         <div class="grid-equal-col">
             <div class="panel-card">
                 <div class="panel-header">
-                    <h2 class="panel-title"><span>🚨</span> Real-Time IoT Sensor Alerts (Live Ticker)</h2>
+                    <h2 class="panel-title"><span>🚨</span> Simulated Sensor Alerts (Auto-Refreshed)</h2>
                 </div>
                 <div id="liveAlertsContainer">
                     <c:choose>
@@ -129,7 +129,7 @@
                                 <th>Location</th>
                                 <th>Congestion</th>
                                 <th>Avg Speed</th>
-                                <th>AI Suggestion</th>
+                                <th>Suggested Action</th>
                             </tr>
                         </thead>
                         <tbody>

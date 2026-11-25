@@ -1,5 +1,5 @@
 /**
- * Smart City Management System - Frontend Interactivity & Live Telemetry
+ * Smart City Management System - Frontend Interactivity & Simulated Telemetry Polling
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * Periodically polls the server's IoT REST API to update live alert badges and sensor counts.
+ * Periodically polls the simulated sensor telemetry REST endpoint to update alert feeds and active node counts.
  */
 function initLiveTelemetryPolling() {
     const alertBox = document.getElementById('liveAlertsContainer');
@@ -22,7 +22,8 @@ function initLiveTelemetryPolling() {
             .then(data => {
                 if (data.status === 'SUCCESS') {
                     if (sensorCountBadge && data.sensors) {
-                        sensorCountBadge.textContent = data.sensors.length;
+                        const activeCount = data.sensors.filter(s => s.status === 'ACTIVE').length;
+                        sensorCountBadge.textContent = activeCount;
                     }
                     if (alertBox && data.liveAlerts) {
                         if (data.liveAlerts.length === 0) {

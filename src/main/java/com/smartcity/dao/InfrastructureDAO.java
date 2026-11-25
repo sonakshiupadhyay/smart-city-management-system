@@ -30,10 +30,12 @@ public class InfrastructureDAO extends AbstractDAO<InfrastructureProject> {
 
     @Override
     public int insert(InfrastructureProject project) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, project.getProjectName());
             stmt.setString(2, project.getDescription());
             stmt.setString(3, project.getCategory());
@@ -54,6 +56,7 @@ public class InfrastructureDAO extends AbstractDAO<InfrastructureProject> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -72,10 +75,12 @@ public class InfrastructureDAO extends AbstractDAO<InfrastructureProject> {
 
     @Override
     public InfrastructureProject findById(int id) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_ID);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             if (rs.next()) return mapResultSet(rs);
@@ -85,16 +90,19 @@ public class InfrastructureDAO extends AbstractDAO<InfrastructureProject> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     @Override
     public List<InfrastructureProject> findAll() throws DatabaseException {
         List<InfrastructureProject> projects = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ALL);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ALL);
             rs = stmt.executeQuery();
             while (rs.next()) projects.add(mapResultSet(rs));
             return projects;
@@ -103,6 +111,7 @@ public class InfrastructureDAO extends AbstractDAO<InfrastructureProject> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -113,10 +122,12 @@ public class InfrastructureDAO extends AbstractDAO<InfrastructureProject> {
 
     public List<InfrastructureProject> findByPlanner(int plannerId) throws DatabaseException {
         List<InfrastructureProject> projects = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_PLANNER);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_PLANNER);
             stmt.setInt(1, plannerId);
             rs = stmt.executeQuery();
             while (rs.next()) projects.add(mapResultSet(rs));
@@ -126,15 +137,18 @@ public class InfrastructureDAO extends AbstractDAO<InfrastructureProject> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     public List<InfrastructureProject> findByStatus(String status) throws DatabaseException {
         List<InfrastructureProject> projects = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_STATUS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_STATUS);
             stmt.setString(1, status);
             rs = stmt.executeQuery();
             while (rs.next()) projects.add(mapResultSet(rs));
@@ -144,6 +158,7 @@ public class InfrastructureDAO extends AbstractDAO<InfrastructureProject> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 

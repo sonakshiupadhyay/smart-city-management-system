@@ -30,10 +30,12 @@ public class ServiceRequestDAO extends AbstractDAO<ServiceRequest> {
 
     @Override
     public int insert(ServiceRequest request) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS);
             stmt.setInt(1, request.getResidentId());
             stmt.setString(2, request.getServiceType());
             stmt.setString(3, request.getTitle());
@@ -50,6 +52,7 @@ public class ServiceRequestDAO extends AbstractDAO<ServiceRequest> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -67,10 +70,12 @@ public class ServiceRequestDAO extends AbstractDAO<ServiceRequest> {
 
     @Override
     public ServiceRequest findById(int id) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_ID);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_ID);
             stmt.setInt(1, id);
             rs = stmt.executeQuery();
             if (rs.next()) return mapResultSet(rs);
@@ -80,16 +85,19 @@ public class ServiceRequestDAO extends AbstractDAO<ServiceRequest> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     @Override
     public List<ServiceRequest> findAll() throws DatabaseException {
         List<ServiceRequest> requests = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_ALL);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_ALL);
             rs = stmt.executeQuery();
             while (rs.next()) requests.add(mapResultSet(rs));
             return requests;
@@ -98,6 +106,7 @@ public class ServiceRequestDAO extends AbstractDAO<ServiceRequest> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -108,10 +117,12 @@ public class ServiceRequestDAO extends AbstractDAO<ServiceRequest> {
 
     public List<ServiceRequest> findByResident(int residentId) throws DatabaseException {
         List<ServiceRequest> requests = new ArrayList<>();
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(FIND_BY_RESIDENT);
+            conn = getConnection();
+            stmt = conn.prepareStatement(FIND_BY_RESIDENT);
             stmt.setInt(1, residentId);
             rs = stmt.executeQuery();
             while (rs.next()) requests.add(mapResultSet(rs));
@@ -121,14 +132,17 @@ public class ServiceRequestDAO extends AbstractDAO<ServiceRequest> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
     public int countPendingByResident(int residentId) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(COUNT_BY_RESIDENT_STATUS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(COUNT_BY_RESIDENT_STATUS);
             stmt.setInt(1, residentId);
             rs = stmt.executeQuery();
             if (rs.next()) return rs.getInt(1);
@@ -138,6 +152,7 @@ public class ServiceRequestDAO extends AbstractDAO<ServiceRequest> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
@@ -146,10 +161,12 @@ public class ServiceRequestDAO extends AbstractDAO<ServiceRequest> {
     }
 
     public int countByStatus(String status) throws DatabaseException {
+        Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
         try {
-            stmt = getConnection().prepareStatement(COUNT_BY_STATUS);
+            conn = getConnection();
+            stmt = conn.prepareStatement(COUNT_BY_STATUS);
             stmt.setString(1, status);
             rs = stmt.executeQuery();
             if (rs.next()) return rs.getInt(1);
@@ -159,6 +176,7 @@ public class ServiceRequestDAO extends AbstractDAO<ServiceRequest> {
         } finally {
             closeResultSet(rs);
             closeStatement(stmt);
+            closeConnection(conn);
         }
     }
 
