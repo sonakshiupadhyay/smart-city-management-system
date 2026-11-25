@@ -1,9 +1,38 @@
-# 🏙️ Smart City Management System
+<div align="center">
 
-A comprehensive Java Web Application for smart urban infrastructure monitoring and municipal operations, built with **Java Servlets, JSP/JSTL, JDBC, MySQL, HikariCP Connection Pooling, and Multithreading**.
+<h1>🏙️ Smart City Management System</h1>
+
+<p><strong>A Java Web Application for urban infrastructure monitoring, municipal operations, rule-based analytics, and simulated sensor telemetry.</strong></p>
+
+<p>
+  <img src="https://img.shields.io/badge/Java-11%2B-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 11+" />
+  <img src="https://img.shields.io/badge/Servlets%204.0%20%26%20JSP-2.3-007396?style=for-the-badge&logo=openjdk&logoColor=white" alt="Servlets & JSP" />
+  <img src="https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
+  <img src="https://img.shields.io/badge/HikariCP-4.0.3-2C5BB4?style=for-the-badge" alt="HikariCP" />
+  <img src="https://img.shields.io/badge/Apache%20Tomcat-9.0%2B-F8DC75?style=for-the-badge&logo=apachetomcat&logoColor=black" alt="Apache Tomcat" />
+  <img src="https://img.shields.io/badge/Apache%20Maven-3.8%2B-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white" alt="Apache Maven" />
+  <img src="https://img.shields.io/badge/JUnit-5.9.3-25A162?style=for-the-badge&logo=junit5&logoColor=white" alt="JUnit 5" />
+</p>
+
+</div>
 
 > **Note on "IoT" and "Analytics" features:**  
 > The sensor telemetry in this project is **simulated** — `IoTSimulationService` generates randomized readings in a background thread; no real IoT hardware or external sensor APIs are connected. Similarly, the analytics and optimization features (resource efficiency, traffic bottleneck detection, environmental scoring) use **rule-based heuristics and threshold comparisons**, not machine-learning or AI models. If real integrations are added in the future, these labels can be updated accordingly.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology | Purpose & Version |
+|-------|------------|-------------------|
+| **Backend Core** | ![Java](https://img.shields.io/badge/Java-11%2B-ED8B00?style=flat-square&logo=openjdk&logoColor=white) ![Servlets](https://img.shields.io/badge/Java%20Servlets-4.0.1-007396?style=flat-square&logo=openjdk&logoColor=white) ![JSP](https://img.shields.io/badge/JSP%20%26%20JSTL-2.3.3%20%2F%201.2-007396?style=flat-square) | MVC controllers, role-based auth filters, server-rendered views, and multithreaded `ScheduledExecutorService` telemetry simulation |
+| **Database & Pooling** | ![MySQL](https://img.shields.io/badge/MySQL-8.0.33-4479A1?style=flat-square&logo=mysql&logoColor=white) ![HikariCP](https://img.shields.io/badge/HikariCP-4.0.3-2C5BB4?style=flat-square) ![H2](https://img.shields.io/badge/H2%20Database-2.2.224-09476B?style=flat-square) | JDBC persistence with MySQL primary storage, in-memory H2 (MySQL mode) fallback, and thread-safe HikariCP connection pooling (`SLF4J 1.7.36`) |
+| **Data & Serialization** | ![Gson](https://img.shields.io/badge/Google%20Gson-2.10.1-4285F4?style=flat-square&logo=json&logoColor=white) | REST JSON payloads for simulated sensor feeds (`/api/sensors`, `/api/live-data`) |
+| **Frontend & Charts** | ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-F7DF1E?style=flat-square&logo=javascript&logoColor=black) ![Chart.js](https://img.shields.io/badge/Chart.js-CDN-FF6384?style=flat-square&logo=chartdotjs&logoColor=white) | Responsive dark glassmorphism UI, resource/AQI/pipeline charts, and periodic Fetch API telemetry polling |
+| **Container & Build** | ![Tomcat](https://img.shields.io/badge/Apache%20Tomcat-9.0%2B-F8DC75?style=flat-square&logo=apachetomcat&logoColor=black) ![Maven](https://img.shields.io/badge/Apache%20Maven-WAR%203.3.2-C71A36?style=flat-square&logo=apachemaven&logoColor=white) | Servlet container deployment (`tomcat7-maven-plugin 2.2` configured) and Maven WAR packaging |
+| **Testing** | ![JUnit5](https://img.shields.io/badge/JUnit%205-5.9.3-25A162?style=flat-square&logo=junit5&logoColor=white) | Automated unit tests for OOP hierarchy, rule-based analytics, and SHA-256 password hashing |
+
+---
 
 ## 👥 User Roles & Capabilities
 
